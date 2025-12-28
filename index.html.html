@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>สุขสันต์คริสต์มาส หยา</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* พื้นหลัง */
+body {
+    background: url("https://png.pngtree.com/background/20210710/original/pngtree-red-christmas-snow-winter-cartoon-show-board-background-picture-image_979028.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* กล่องรวม */
+.wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+/* ซานต้า */
+.santa {
+    position: absolute;
+    font-size: 95px;
+    top: 50%;
+    user-select: none;
+    animation: hug 2.8s ease-in-out infinite;
+}
+
+.santa.left {
+    left: -95px;
+    transform: translateY(-50%) rotate(-12deg);
+}
+
+.santa.right {
+    right: -95px;
+    transform: translateY(-50%) rotate(12deg);
+}
+
+@keyframes hug {
+    0%   { transform: translateY(-50%) scale(1); }
+    50%  { transform: translateY(-50%) scale(1.06); }
+    100% { transform: translateY(-50%) scale(1); }
+}
+
+/* กล่องข้อความ */
+.center {
+    background: rgba(255,255,255,0.92);
+    padding: 34px 58px;
+    border-radius: 26px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #c0392b;
+    box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+    position: relative;
+    z-index: 2;
+    animation: pulse 2.5s ease-in-out infinite;
+}
+
+.center span {
+    display: block;
+    margin-top: 10px;
+    font-size: 28px;
+    color: #2c3e50;
+}
+
+@keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+/* สติ๊กเกอร์ */
+.sticker {
+    position: absolute;
+    font-size: 46px;
+    animation: float 4s ease-in-out infinite;
+    user-select: none;
+}
+
+@keyframes float {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-18px); }
+    100% { transform: translateY(0); }
+}
+
+/* หิมะ */
+.snow {
+    position: absolute;
+    top: -10px;
+    color: white;
+    opacity: 0.85;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); }
+}
+
+/* ปุ่มเปิดเพลง */
+#playMusicBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 12px 22px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 20;
+}
+#playMusicBtn:hover {
+    background: #2ecc71;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ซานต้าโอบกล่อง -->
+<div class="wrapper">
+    <div class="santa left">🎅</div>
+
+    <div class="center">
+        🎄 สุขสันต์คริสต์มาสนะ หยา 🎄
+        <span>ขอให้กินแซ่บพุงไม่ยื่น 🤍</span>
+    </div>
+
+    <div class="santa right">🎅</div>
+</div>
+
+<!-- ปุ่มเปิดเพลง -->
+<button id="playMusicBtn" onclick="playMusic()">🎶 เปิดเพลงคริสต์มาส</button>
+
+<!-- สคริปต์สติ๊กเกอร์ + หิมะ -->
+<script>
+/* ===== สติ๊กเกอร์ถี่ ===== */
+const stickers = ["🎄","🎁","⭐","❄️"];
+const perType = 5;
+
+stickers.forEach(icon => {
+    for (let i = 0; i < perType; i++) {
+        const s = document.createElement("div");
+        s.className = "sticker";
+        s.innerHTML = icon;
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.top = Math.random() * 100 + "vh";
+        s.style.animationDuration = (3 + Math.random() * 3) + "s";
+        document.body.appendChild(s);
+    }
+});
+
+/* ===== หิมะ ===== */
+for (let i = 0; i < 80; i++) {
+    const snow = document.createElement("div");
+    snow.className = "snow";
+    snow.innerHTML = "❄";
+    snow.style.left = Math.random() * 100 + "vw";
+    snow.style.fontSize = (10 + Math.random() * 18) + "px";
+    snow.style.animationDuration = (3 + Math.random() * 5) + "s";
+    document.body.appendChild(snow);
+}
+</script>
+
+<!-- YouTube iframe -->
+<iframe id="ytplayer"
+src="https://www.youtube.com/embed/qrm8w-pV120?enablejsapi=1&loop=1&playlist=qrm8w-pV120"
+frameborder="0"
+allow="autoplay; encrypted-media"
+style="width:1px; height:1px; opacity:0;">
+</iframe>
+
+<script>
+function playMusic() {
+    document.getElementById("ytplayer").contentWindow.postMessage(
+        '{"event":"command","func":"playVideo","args":""}',
+        "*"
+    );
+    document.getElementById("playMusicBtn").innerText = "🎶 เล่นแล้ว! สนุกเลย";
+    document.getElementById("playMusicBtn").disabled = true;
+}
+</script>
+
+</body>
+</html>
